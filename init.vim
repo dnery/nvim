@@ -41,6 +41,9 @@ Plug 'othree/xml.vim'
 Plug 'kien/ctrlp.vim'
 Plug 'suan/vim-instant-markdown'
 Plug 'tclem/vim-arduino'
+Plug 'rust-lang/rust.vim'
+Plug 'altercation/vim-colors-solarized'
+Plug 'wannesm/wmgraphviz.vim'
 "" End Plugins
 
 call plug#end()
@@ -117,6 +120,9 @@ cmap w!! w !sudo tee % > /dev/null
 "" Ident entire file
 nnoremap <silent> <leader>= gg=G<C-O><C-O>
 
+"" Find trailing whitespace
+nnoremap <silent> <leader>s /\s$<CR>
+
 "}
 
 " Bubble single lines "{
@@ -132,22 +138,22 @@ set tags=./tags;
 set laststatus=2
 set noshowmode
 set whichwrap=b,s,<,>,[,]
-set background=dark
-set hlsearch
 set foldmarker={,}
 set foldmethod=marker
 set foldlevelstart=99
 set smartindent
+set hlsearch incsearch
 set ignorecase smartcase
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
-set noexpandtab
-set exrc
 set secure
+set exrc
 set nu
-set relativenumber
 set completeopt=menuone
+"}
+
+" Highlight 80 col's onward "{
+set t_Co=256
+set background=dark
+colorscheme solarized
 "}
 
 " AuGroups "{
@@ -215,6 +221,15 @@ augroup END "}
 augroup arduino "{
 	au BufRead,BufNewFile *.pde set filetype=arduino
 	au BufRead,BufNewFile *.ino set filetype=arduino
+augroup END "}
+
+augroup Highlighting "{
+	autocmd!
+	au BufNewFile,BufRead * highlight ColorColumn ctermbg=90
+	au BufNewFile,BufRead * call matchadd('ColorColumn', '\%81v', 100, 1234)
+	au BufNewFile,BufRead *.html call matchdelete(1234)
+	au BufNewFile,BufRead *.java call matchdelete(1234)
+	au BufNewFile,BufRead *.java call matchadd('ColorColumn', '\%101v', 100)
 augroup END "}
 
 "}
