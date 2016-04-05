@@ -21,29 +21,32 @@ call plug#begin(plugged_path)
 
 "" Plugins
 Plug 'junegunn/vim-plug'
-Plug 'tpope/vim-surround'
 Plug 'scrooloose/syntastic'
 Plug 'scrooloose/nerdtree'
-Plug 'SirVer/ultisnips'
 Plug 'ervandew/supertab'
-Plug 'sentientmachine/erics_vim_syntax_and_color_highlighting'
-Plug 'vim-scripts/a.vim'
+Plug 'SirVer/ultisnips'
+Plug 'kien/ctrlp.vim'
 Plug 'tpope/vim-git'
+Plug 'tpope/vim-rails'
+Plug 'majutsushi/tagbar'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
+Plug 'gioele/vim-autoswap'
+Plug 'airblade/vim-gitgutter'
+Plug 'Rip-Rip/clang_complete'
 Plug 'vim-scripts/OmniCppComplete'
+Plug 'terryma/vim-multiple-cursors'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'tpope/vim-rails'
 Plug 'chrisbra/NrrwRgn'
-Plug 'airblade/vim-gitgutter'
-Plug 'terryma/vim-multiple-cursors'
 Plug 'othree/xml.vim'
-Plug 'kien/ctrlp.vim'
-Plug 'suan/vim-instant-markdown'
-Plug 'tclem/vim-arduino'
 Plug 'rust-lang/rust.vim'
-Plug 'altercation/vim-colors-solarized'
+Plug 'Townk/vim-autoclose'
 Plug 'wannesm/wmgraphviz.vim'
+Plug 'suan/vim-instant-markdown'
+Plug 'altercation/vim-colors-solarized'
+Plug 'sentientmachine/erics_vim_syntax_and_color_highlighting'
+Plug 'justinmk/vim-syntax-extra'
 "" End Plugins
 
 call plug#end()
@@ -77,7 +80,7 @@ nnoremap <DOWN> g<DOWN>
 
 "" edit and source vimrc file
 nnoremap <silent> <leader>ev :vsplit $MYVIMRC<CR>
-nnoremap <silent> <leader>sv source $MYVIMRC<CR>
+nnoremap <silent> <leader>sv :source $MYVIMRC<CR>
 
 " Press Space to turn off highlighting and clear any message already displayed.
 nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>l
@@ -99,6 +102,9 @@ inoremap jk <Esc>
 
 "" NerdTree
 nnoremap \ :NERDTreeToggle<CR>
+
+" Tagbar toggle
+nnoremap <silent> <leader>t :TagbarOpenAutoClose<CR>
 
 "" Better Scrolling
 nnoremap <C-J> <C-E>
@@ -144,6 +150,7 @@ set foldlevelstart=99
 set smartindent
 set hlsearch incsearch
 set ignorecase smartcase
+set nowrap
 set secure
 set exrc
 set nu
@@ -154,36 +161,28 @@ set completeopt=menuone
 set t_Co=256
 set background=dark
 colorscheme solarized
+au BufNewFile,BufRead * highlight ColorColumn ctermbg=90
+au BufNewFile,BufRead * call matchadd('ColorColumn', '\%81v', 100)
 "}
 
 " AuGroups "{
-augroup devHelp "{
+augroup DevHelp "{
 	autocmd!
 	au Filetype c nnoremap <silent> <buffer> <leader>k :! devhelp -s "<cword>" 2>/dev/null 1>&2 &<CR><CR>
 augroup END "}
 
-augroup htmlAbrrevs "{
+augroup HTMlAbbrevs "{
 	autocmd!
 	autocmd BufNewFile,BufRead *.html iabbrev << &lt;
 	autocmd BufNewFile,BufRead *.html iabbrev >> &gt;
 augroup END "}
 
-augroup syntaxes "{
+augroup Syntaxes "{
 	autocmd!
 	au BufNewFile,BufRead *.asm setlocal syntax=icmc
 augroup END "}
 
-augroup customTabs "{
-	autocmd!
-	au BufNewFile,BufRead *.rb setlocal tabstop=2
-	au BufNewFile,BufRead *.rb setlocal shiftwidth=2
-	au BufNewFile,BufRead *.rb setlocal softtabstop=2
-	au BufNewFile,BufRead *.erb setlocal tabstop=2
-	au BufNewFile,BufRead *.erb setlocal shiftwidth=2
-	au BufNewFile,BufRead *.erb setlocal softtabstop=2
-augroup END "}
-
-augroup comments "{
+augroup Comments "{
 	autocmd!
 	au BufNewFile,BufRead *.c nnoremap <silent> <buffer> <leader>q I//<esc>:s/\v(\/\/+)\1+//e<CR>
 	au BufNewFile,BufRead *.java nnoremap <silent> <buffer> <leader>q I//<esc>:s/\v(\/\/+)\1+//e<CR>
@@ -191,14 +190,6 @@ augroup comments "{
 	au BufNewFile,BufRead *.rb nnoremap <silent> <buffer> <leader>q I#<esc>:s/\v(#+)\1+//e<CR>
 	au BufNewFile,BufRead *.py nnoremap <silent> <buffer> <leader>q I#<esc>:s/\v(#+)\1+//e<CR>
 	au Syntax vim nnoremap <silent> <buffer> <leader>q I"<esc>:s/\v("+)\1+//e<CR>
-augroup END "}
-
-augroup JavaEclim "{
-	autocmd!
-	au BufNewFile,BufRead *.java nnoremap <silent> <buffer> <leader>o :JavaImportOrganize<CR>
-	au BufNewFile,BufRead *.java nnoremap <silent> <buffer> <leader>gi :JavaSearch<CR>
-	au BufNewFile,BufRead *.java nnoremap <silent> <buffer> <leader>c :JavaCorrect<CR>
-	au BufNewFile,BufRead *.java nnoremap <silent> <buffer> <leader>i :JavaImpl<CR>
 augroup END "}
 
 augroup PlantUML "{
@@ -213,25 +204,10 @@ augroup VimRC "{
 	autocmd! BufWritePost *vimrc source %
 augroup END "}
 
-augroup commitSpell "{
+augroup CommitSpelling "{
 	" Git commits.
 	autocmd FileType gitcommit setlocal spell
 augroup END "}
-
-augroup arduino "{
-	au BufRead,BufNewFile *.pde set filetype=arduino
-	au BufRead,BufNewFile *.ino set filetype=arduino
-augroup END "}
-
-augroup Highlighting "{
-	autocmd!
-	au BufNewFile,BufRead * highlight ColorColumn ctermbg=90
-	au BufNewFile,BufRead * call matchadd('ColorColumn', '\%81v', 100, 1234)
-	au BufNewFile,BufRead *.html call matchdelete(1234)
-	au BufNewFile,BufRead *.java call matchdelete(1234)
-	au BufNewFile,BufRead *.java call matchadd('ColorColumn', '\%101v', 100)
-augroup END "}
-
 "}
 
 " Enable mouse "{
@@ -241,28 +217,33 @@ endif "}
 
 " Plugin related configs "{
 " vim-airline config {
-let g:airline_powerline_fonts = 1
+let g:airline_powerline_fonts=1
 let g:airline_theme='base16_summerfruit'
 " }
 
 "Eclim on supertab "{
-let g:SuperTabDefaultCompletionType = 'context'
+let g:SuperTabDefaultCompletionType='context'
 "}
 
 "CtrlP configs "{
-let g:ctrlp_map = '<leader>p'
-" disable caching
+let g:ctrlp_map='<c-p>'
+let g:ctrlp_cmd='CtrlP'
 let g:ctrlp_use_caching=0
 "}
 
 "Ultisnips using tab to expand "{
-let g:UltiSnipsExpandTrigger = "<tab>"
-let g:UltiSnipsJumpForwardTrigger = "<tab>"
-let g:UltiSnipsJumpBackwardTrigger = "<S-tab>"
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
 "}
 
-"Disable default assembly checker "{
+"Disable checkers for special cases "{
 let g:syntastic_disabled_filetypes=['asm']
+"}
+
+"Set up proper checking for C++ projects "{
+let g:syntastic_cpp_compiler='clang++'
+let g:syntastic_cpp_compiler_options=' -std=c++11 -stdlib=libstdc++'
 "}
 "}
 
