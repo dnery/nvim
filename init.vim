@@ -21,44 +21,47 @@ call plug#begin(plugged_path)
 
 "" Plugins
 Plug 'junegunn/vim-plug'
+
+" Code analysis
 Plug 'scrooloose/syntastic'
-Plug 'scrooloose/nerdtree'
-Plug 'ervandew/supertab'
-Plug 'SirVer/ultisnips'
+Plug 'Rip-Rip/clang_complete'
+
+" Code navigation
 Plug 'kien/ctrlp.vim'
+Plug 'majutsushi/tagbar'
+Plug 'scrooloose/nerdtree'
+
+" Code editing-boosters
+"Plug 'vim-scripts/c.vim'
+Plug 'chrisbra/NrrwRgn'
+"Plug 'SirVer/ultisnips'
+"Plug 'ervandew/supertab'
+Plug 'tpope/vim-surround'
+Plug 'Townk/vim-autoclose'
+Plug 'terryma/vim-multiple-cursors'
+
+" Code & tool integration
 Plug 'tpope/vim-git'
 Plug 'tpope/vim-rails'
-Plug 'majutsushi/tagbar'
 Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-surround'
 Plug 'gioele/vim-autoswap'
 Plug 'airblade/vim-gitgutter'
-Plug 'Rip-Rip/clang_complete'
-Plug 'vim-scripts/OmniCppComplete'
-Plug 'terryma/vim-multiple-cursors'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'chrisbra/NrrwRgn'
-Plug 'othree/xml.vim'
+
+" Code colors & syntax
+Plug 'lervag/vimtex'
+"Plug 'othree/xml.vim'
 Plug 'rust-lang/rust.vim'
-Plug 'Townk/vim-autoclose'
-Plug 'wannesm/wmgraphviz.vim'
+Plug 'vim-airline/vim-airline'
 Plug 'suan/vim-instant-markdown'
+Plug 'justinmk/vim-syntax-extra'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'altercation/vim-colors-solarized'
 Plug 'sentientmachine/erics_vim_syntax_and_color_highlighting'
-Plug 'justinmk/vim-syntax-extra'
 "" End Plugins
 
 call plug#end()
 filetype plugin indent on
 " Plug Done
-
-"" If Plug was just installed, install all plugins
-"if isPlugUpdated == 0
-"	echo "Installing Plugins, please ignore key map error messages"
-"	echo ""
-"	:BundleInstall!
-"endif "}
 
 " Leader key "{
 let mapleader = ","
@@ -82,8 +85,11 @@ nnoremap <DOWN> g<DOWN>
 nnoremap <silent> <leader>ev :vsplit $MYVIMRC<CR>
 nnoremap <silent> <leader>sv :source $MYVIMRC<CR>
 
-" Press Space to turn off highlighting and clear any message already displayed.
+"" Press Space to turn off highlighting and clear any message already displayed.
 nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>l
+
+"" Find trailing whitespace
+nnoremap <silent> <leader>hs /\s$<CR>
 
 "" Using H and L as 0 and $
 nnoremap H 0
@@ -97,9 +103,6 @@ nnoremap <silent> <leader>l :setlocal spell!<CR>
 "" Create Fold
 nnoremap <silent> <leader>f :set foldmethod=marker<CR>
 
-"" jk in insert mode exits it
-inoremap jk <Esc>
-
 "" NerdTree
 nnoremap \ :NERDTreeToggle<CR>
 
@@ -111,33 +114,25 @@ nnoremap <C-J> <C-E>
 nnoremap <C-K> <C-Y>
 
 "" Tabs Commands
-nnoremap <C-S><C-X> gt
-nnoremap <C-S><C-Z> gT
-"map <C-S><C-S> gT
 nnoremap <C-S><C-W> :tabclose<CR>
 nnoremap <C-S><C-O> :tabnew<CR>
-
-"" Save current file
-nnoremap <C-S> :w<CR>
 
 "" Save as root
 cmap w!! w !sudo tee % > /dev/null
 
 "" Ident entire file
 nnoremap <silent> <leader>= gg=G<C-O><C-O>
-
-"" Find trailing whitespace
-nnoremap <silent> <leader>s /\s$<CR>
-
 "}
 
 " Bubble single lines "{
 nmap <M-J> @=']e'<CR>
 nmap <M-K> @='[e'<CR>
+"}
 
-" Bubble multiple lines
+" Bubble multiple lines "{
 vmap <M-K> [egv
-vmap <M-J> ]egv "}
+vmap <M-J> ]egv
+"}
 
 " Settings "{
 set tags=./tags;
@@ -219,10 +214,7 @@ endif "}
 " vim-airline config {
 let g:airline_powerline_fonts=1
 let g:airline_theme='base16_summerfruit'
-" }
-
-"Eclim on supertab "{
-let g:SuperTabDefaultCompletionType='context'
+let g:airline#extensions#whitespace#enabled = 0
 "}
 
 "CtrlP configs "{
@@ -232,18 +224,25 @@ let g:ctrlp_use_caching=0
 "}
 
 "Ultisnips using tab to expand "{
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
+"let g:UltiSnipsExpandTrigger="<tab>"
+"let g:UltiSnipsJumpForwardTrigger="<tab>"
+"let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
 "}
 
 "Disable checkers for special cases "{
 let g:syntastic_disabled_filetypes=['asm']
 "}
 
+"Set up proper checking for C projects "{
+let g:syntastic_c_checkers=['clang_check','cppcheck']
+let g:syntastic_c_compiler='clang'
+let g:syntastic_c_compiler_options='-ansi -pedantic'
+"}
+
 "Set up proper checking for C++ projects "{
+let g:syntastic_cpp_checkers=['clang_check','cppcheck']
 let g:syntastic_cpp_compiler='clang++'
-let g:syntastic_cpp_compiler_options=' -std=c++11 -stdlib=libstdc++'
+let g:syntastic_cpp_compiler_options='-std=c++11 -stdlib=libstdc++'
 "}
 "}
 
@@ -262,18 +261,19 @@ function! s:MoveSelectionUp(count) abort
 	norm! ``
 	silent! call repeat#set("\<Plug>unimpairedMoveSelectionUp", a:count)
 endfunction
-function! s:MoveSelectionDown(count) abort
 
+function! s:MoveSelectionDown(count) abort
 	normal! m`
 	norm! ``
 	exe "'<,'>move'>+".a:count
 	silent! call repeat#set("\<Plug>unimpairedMoveSelectionDown", a:count)
 endfunction
+"}
 
-nnoremap <silent> <Plug>unimpairedMoveUp            :<C-U>call <SID>Move('--',v:count1,'Up')<CR>
-nnoremap <silent> <Plug>unimpairedMoveDown          :<C-U>call <SID>Move('+',v:count1,'Down')<CR>
-noremap  <silent> <Plug>unimpairedMoveSelectionUp   :<C-U>call <SID>MoveSelectionUp(v:count1)<CR>
-noremap  <silent> <Plug>unimpairedMoveSelectionDown :<C-U>call <SID>MoveSelectionDown(v:count1)<CR>
+"nnoremap <silent> <Plug>unimpairedMoveUp            :<C-U>call <SID>Move('--',v:count1,'Up')<CR>
+"nnoremap <silent> <Plug>unimpairedMoveDown          :<C-U>call <SID>Move('+',v:count1,'Down')<CR>
+"noremap  <silent> <Plug>unimpairedMoveSelectionUp   :<C-U>call <SID>MoveSelectionUp(v:count1)<CR>
+"noremap  <silent> <Plug>unimpairedMoveSelectionDown :<C-U>call <SID>MoveSelectionDown(v:count1)<CR>
 
 nmap [e <Plug>unimpairedMoveUp
 nmap ]e <Plug>unimpairedMoveDown
