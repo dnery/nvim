@@ -8,12 +8,12 @@ let vimrc=expand('~/.config/nvim/init.vim')
 let plugged_path=expand('~/.config/nvim/plugged/')
 let plug_readme=expand('~/.config/nvim/bundle/vundle/README.md')
 if !filereadable(plug_readme)
-	echo "Installing Plug.."
-	echo ""
-	silent !mkdir -p plugged_path
-	silent !git clone https://github.com/gmarik/vundle ~/.config/nvim/bundle/vundle
-	silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-	let isPlugUpdated=0
+        echo "Installing Plug.."
+        echo ""
+        silent !mkdir -p plugged_path
+        silent !git clone https://github.com/gmarik/vundle ~/.config/nvim/bundle/vundle
+        silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        let isPlugUpdated=0
 endif
 
 "" Init Plug
@@ -34,8 +34,9 @@ Plug 'scrooloose/nerdtree'
 " Code editing-boosters
 "Plug 'vim-scripts/c.vim'
 Plug 'chrisbra/NrrwRgn'
-"Plug 'SirVer/ultisnips'
-"Plug 'ervandew/supertab'
+Plug 'SirVer/ultisnips'
+Plug 'ervandew/supertab'
+Plug 'honza/vim-snippets'
 Plug 'tpope/vim-surround'
 Plug 'Townk/vim-autoclose'
 Plug 'terryma/vim-multiple-cursors'
@@ -51,6 +52,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'lervag/vimtex'
 "Plug 'othree/xml.vim'
 Plug 'rust-lang/rust.vim'
+Plug 'tikhomirov/vim-glsl'
 Plug 'vim-airline/vim-airline'
 Plug 'suan/vim-instant-markdown'
 Plug 'justinmk/vim-syntax-extra'
@@ -72,7 +74,8 @@ let localleader = ";"
 command! W w
 command! Q q
 command! Wq wq
-command! WQ wq "}
+command! WQ wq
+"}
 
 " Mappings "{
 "" Consider long lines separate lines
@@ -110,8 +113,8 @@ nnoremap \ :NERDTreeToggle<CR>
 nnoremap <silent> <leader>t :TagbarOpenAutoClose<CR>
 
 "" Better Scrolling
-nnoremap <C-J> <C-E>
-nnoremap <C-K> <C-Y>
+"nnoremap <C-J> <C-E>
+"nnoremap <C-K> <C-Y>
 
 "" Tabs Commands
 nnoremap <C-S><C-W> :tabclose<CR>
@@ -125,13 +128,13 @@ nnoremap <silent> <leader>= gg=G<C-O><C-O>
 "}
 
 " Bubble single lines "{
-nmap <M-J> @=']e'<CR>
-nmap <M-K> @='[e'<CR>
+"nmap <M-J> @=']e'<CR>
+"nmap <M-K> @='[e'<CR>
 "}
 
 " Bubble multiple lines "{
-vmap <M-K> [egv
-vmap <M-J> ]egv
+"vmap <M-K> [egv
+"vmap <M-J> ]egv
 "}
 
 " Settings "{
@@ -142,6 +145,9 @@ set whichwrap=b,s,<,>,[,]
 set foldmarker={,}
 set foldmethod=marker
 set foldlevelstart=99
+set expandtab
+set shiftwidth=8
+set softtabstop=8
 set smartindent
 set hlsearch incsearch
 set ignorecase smartcase
@@ -149,7 +155,10 @@ set nowrap
 set secure
 set exrc
 set nu
-set completeopt=menuone
+"set completeopt=menuone
+set pumheight=10
+set completeopt=menu,longest
+set list listchars=tab:»·,trail:·
 "}
 
 " Highlight 80 col's onward "{
@@ -162,59 +171,54 @@ au BufNewFile,BufRead * call matchadd('ColorColumn', '\%81v', 100)
 
 " AuGroups "{
 augroup DevHelp "{
-	autocmd!
-	au Filetype c nnoremap <silent> <buffer> <leader>k :! devhelp -s "<cword>" 2>/dev/null 1>&2 &<CR><CR>
+        autocmd!
+        au Filetype c nnoremap <silent> <buffer> <leader>k :! devhelp -s "<cword>" 2>/dev/null 1>&2 &<CR><CR>
 augroup END "}
 
 augroup HTMlAbbrevs "{
-	autocmd!
-	autocmd BufNewFile,BufRead *.html iabbrev << &lt;
-	autocmd BufNewFile,BufRead *.html iabbrev >> &gt;
+        autocmd!
+        autocmd BufNewFile,BufRead *.html iabbrev << &lt;
+        autocmd BufNewFile,BufRead *.html iabbrev >> &gt;
 augroup END "}
 
 augroup Syntaxes "{
-	autocmd!
-	au BufNewFile,BufRead *.asm setlocal syntax=icmc
+        autocmd!
+        au BufNewFile,BufRead *.asm setlocal syntax=icmc
 augroup END "}
 
 augroup Comments "{
-	autocmd!
-	au BufNewFile,BufRead *.c nnoremap <silent> <buffer> <leader>q I//<esc>:s/\v(\/\/+)\1+//e<CR>
-	au BufNewFile,BufRead *.java nnoremap <silent> <buffer> <leader>q I//<esc>:s/\v(\/\/+)\1+//e<CR>
-	au BufNewFile,BufRead *.js nnoremap <silent> <buffer> <leader>q I//<esc>:s/\v(\/\/+)\1+//e<CR>
-	au BufNewFile,BufRead *.rb nnoremap <silent> <buffer> <leader>q I#<esc>:s/\v(#+)\1+//e<CR>
-	au BufNewFile,BufRead *.py nnoremap <silent> <buffer> <leader>q I#<esc>:s/\v(#+)\1+//e<CR>
-	au Syntax vim nnoremap <silent> <buffer> <leader>q I"<esc>:s/\v("+)\1+//e<CR>
+        autocmd!
+        au BufNewFile,BufRead *.c nnoremap <silent> <buffer> <leader>q I//<esc>:s/\v(\/\/+)\1+//e<CR>
+        au BufNewFile,BufRead *.java nnoremap <silent> <buffer> <leader>q I//<esc>:s/\v(\/\/+)\1+//e<CR>
+        au BufNewFile,BufRead *.js nnoremap <silent> <buffer> <leader>q I//<esc>:s/\v(\/\/+)\1+//e<CR>
+        au BufNewFile,BufRead *.rb nnoremap <silent> <buffer> <leader>q I#<esc>:s/\v(#+)\1+//e<CR>
+        au BufNewFile,BufRead *.py nnoremap <silent> <buffer> <leader>q I#<esc>:s/\v(#+)\1+//e<CR>
+        au Syntax vim nnoremap <silent> <buffer> <leader>q I"<esc>:s/\v("+)\1+//e<CR>
 augroup END "}
 
 augroup PlantUML "{
-	autocmd!
-	au BufNewFile,BufRead *.uml setlocal syntax=plantuml
-	au BufNewFile,BufRead *.puml setlocal syntax=plantuml
-	au BufNewFile,BufRead *.puml nnoremap <silent> <leader>w :!plantuml -tsvg %<CR><CR>
-augroup END "}
-
-augroup VimRC "{
-	autocmd!
-	autocmd! BufWritePost *vimrc source %
+        autocmd!
+        au BufNewFile,BufRead *.uml setlocal syntax=plantuml
+        au BufNewFile,BufRead *.puml setlocal syntax=plantuml
+        au BufNewFile,BufRead *.puml nnoremap <silent> <leader>w :!plantuml -tsvg %<CR><CR>
 augroup END "}
 
 augroup CommitSpelling "{
-	" Git commits.
-	autocmd FileType gitcommit setlocal spell
+        " Git commits.
+        autocmd FileType gitcommit setlocal spell
 augroup END "}
 "}
 
 " Enable mouse "{
 if has('mouse')
-	set mouse=a
+        set mouse=a
 endif "}
 
 " Plugin related configs "{
 " vim-airline config {
+let g:airline_theme='badwolf'
 let g:airline_powerline_fonts=1
-let g:airline_theme='base16_summerfruit'
-let g:airline#extensions#whitespace#enabled = 0
+"let g:airline#extensions#whitespace#enabled=1
 "}
 
 "CtrlP configs "{
@@ -223,50 +227,79 @@ let g:ctrlp_cmd='CtrlP'
 let g:ctrlp_use_caching=0
 "}
 
+"Configure Supertab with Ultisnips & Clang Complete "{
+let g:SuperTabDefaultCompletionType='<c-x><c-o>'
+let g:clang_complete_auto=0
+let g:clang_auto_select=2
+let g:clang_snippets=1
+let g:clang_snippets_engine='ultisnips'
+"}
+
 "Ultisnips using tab to expand "{
-"let g:UltiSnipsExpandTrigger="<tab>"
-"let g:UltiSnipsJumpForwardTrigger="<tab>"
-"let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
+"}
+
+"Clang to complete macros also (A.K.A. The GLEW Case) "{
+""When using Glew, rememer!
+""  #ifdef CLANG_COMPLETE_ONLY
+""      #define GL_GLEXT_PROTOTYPES
+""      #include <GL/gl.h>
+""      #include <GL/glext.h>
+""  #else
+""      #include <GL/glew.h>
+""  #endif
+let g:clang_complete_macros=1
+let g:clang_user_options='-DCLANG_COMPLETE_ONLY'
 "}
 
 "Disable checkers for special cases "{
 let g:syntastic_disabled_filetypes=['asm']
 "}
 
-"Set up proper checking for C projects "{
+"Set up proper linting for C projects "{
+""Remember default name!
+""  g:syntastic_clang_check_config_file (string; default: '.syntastic_clang_check_config')
 let g:syntastic_c_checkers=['clang_check','cppcheck']
-let g:syntastic_c_compiler='clang'
-let g:syntastic_c_compiler_options='-ansi -pedantic'
+"let g:syntastic_c_clang_check_args='-fixit'
 "}
 
-"Set up proper checking for C++ projects "{
+"Set up proper linting for C++ projects "{
+""Remember default name!
+""  g:syntastic_clang_check_config_file (string; default: '.syntastic_clang_check_config')
 let g:syntastic_cpp_checkers=['clang_check','cppcheck']
-let g:syntastic_cpp_compiler='clang++'
-let g:syntastic_cpp_compiler_options='-std=c++11 -stdlib=libstdc++'
+"let g:syntastic_cpp_clang_check_args='-fixit'
+"}
+
+"Set up proper linting for GLSL files "{
+""Don't forget the magic comment!
+""  profile: (glslv|glslg|glslf)
+let g:syntastic_glsl_options='-oglsl -strict'
 "}
 "}
 
 "" Functions {
 " Bubble lines {
 function! s:Move(cmd, count, map) abort
-	normal! m`
-	silent! exe 'move'.a:cmd.a:count
-	norm! ``
-	silent! call repeat#set("\<Plug>unimpairedMove".a:map, a:count)
+        normal! m`
+        silent! exe 'move'.a:cmd.a:count
+        norm! ``
+        silent! call repeat#set("\<Plug>unimpairedMove".a:map, a:count)
 endfunction
 
 function! s:MoveSelectionUp(count) abort
-	normal! m`
-	silent! exe "'<,'>move'<--".a:count
-	norm! ``
-	silent! call repeat#set("\<Plug>unimpairedMoveSelectionUp", a:count)
+        normal! m`
+        silent! exe "'<,'>move'<--".a:count
+        norm! ``
+        silent! call repeat#set("\<Plug>unimpairedMoveSelectionUp", a:count)
 endfunction
 
 function! s:MoveSelectionDown(count) abort
-	normal! m`
-	norm! ``
-	exe "'<,'>move'>+".a:count
-	silent! call repeat#set("\<Plug>unimpairedMoveSelectionDown", a:count)
+        normal! m`
+        norm! ``
+        exe "'<,'>move'>+".a:count
+        silent! call repeat#set("\<Plug>unimpairedMoveSelectionDown", a:count)
 endfunction
 "}
 
