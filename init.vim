@@ -8,8 +8,9 @@ let plugged_path=expand('~/.config/nvim/plugged/')
 if !isdirectory(plugged_path)
         echo "Installing Plug..."
         echo ""
+        !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
         execute '!mkdir -p ' . plugged_path
-        execute '!curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+        source $MYVIMRC
         finish
 endif
 
