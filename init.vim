@@ -3,17 +3,18 @@ syntax on
 " Plug and plugins "{
 
 "" Autoinstall Plug
-let isPlugUpdated=1
+"let isPlugUpdated=1
 let vimrc=expand('~/.config/nvim/init.vim')
 let plugged_path=expand('~/.config/nvim/plugged/')
-let plug_readme=expand('~/.config/nvim/bundle/vundle/README.md')
-if !filereadable(plug_readme)
+"let plug_readme=expand('~/.config/nvim/bundle/vundle/README.md')
+if !exists('g:loaded_plug')
         echo "Installing Plug.."
         echo ""
-        silent !mkdir -p plugged_path
-        silent !git clone https://github.com/gmarik/vundle ~/.config/nvim/bundle/vundle
-        silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-        let isPlugUpdated=0
+        "silent !mkdir -p plugged_path
+        "silent !git clone https://github.com/gmarik/vundle ~/.config/nvim/bundle/vundle
+        silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
+        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        "let isPlugUpdated=0
 endif
 
 "" Init Plug
@@ -58,7 +59,6 @@ Plug 'suan/vim-instant-markdown'
 Plug 'justinmk/vim-syntax-extra'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'altercation/vim-colors-solarized'
-Plug 'sentientmachine/erics_vim_syntax_and_color_highlighting'
 "" End Plugins
 
 call plug#end()
@@ -113,8 +113,8 @@ nnoremap \ :NERDTreeToggle<CR>
 nnoremap <silent> <leader>t :TagbarOpenAutoClose<CR>
 
 "" Better Scrolling
-"nnoremap <C-J> <C-E>
-"nnoremap <C-K> <C-Y>
+nnoremap <C-J> <C-E>
+nnoremap <C-K> <C-Y>
 
 "" Tabs Commands
 nnoremap <C-S><C-W> :tabclose<CR>
@@ -126,6 +126,8 @@ cmap w!! w !sudo tee % > /dev/null
 "" Ident entire file
 nnoremap <silent> <leader>= gg=G<C-O><C-O>
 "}
+
+"" Bubbling blocks do not work!
 
 " Bubble single lines "{
 "nmap <M-J> @=']e'<CR>
@@ -218,7 +220,6 @@ endif "}
 " vim-airline config {
 let g:airline_theme='badwolf'
 let g:airline_powerline_fonts=1
-"let g:airline#extensions#whitespace#enabled=1
 "}
 
 "CtrlP configs "{
@@ -229,10 +230,10 @@ let g:ctrlp_use_caching=0
 
 "Configure Supertab with Ultisnips & Clang Complete "{
 let g:SuperTabDefaultCompletionType='<c-x><c-o>'
+let g:clang_snippets_engine='ultisnips'
 let g:clang_complete_auto=0
 let g:clang_auto_select=2
 let g:clang_snippets=1
-let g:clang_snippets_engine='ultisnips'
 "}
 
 "Ultisnips using tab to expand "{
@@ -274,7 +275,7 @@ let g:syntastic_cpp_checkers=['clang_check','cppcheck']
 
 "Set up proper linting for GLSL files "{
 ""Don't forget the magic comment!
-""  profile: (glslv|glslg|glslf)
+""  // profile: (glslv|glslg|glslf)
 let g:syntastic_glsl_options='-oglsl -strict'
 "}
 "}
@@ -303,10 +304,10 @@ function! s:MoveSelectionDown(count) abort
 endfunction
 "}
 
-"nnoremap <silent> <Plug>unimpairedMoveUp            :<C-U>call <SID>Move('--',v:count1,'Up')<CR>
-"nnoremap <silent> <Plug>unimpairedMoveDown          :<C-U>call <SID>Move('+',v:count1,'Down')<CR>
-"noremap  <silent> <Plug>unimpairedMoveSelectionUp   :<C-U>call <SID>MoveSelectionUp(v:count1)<CR>
-"noremap  <silent> <Plug>unimpairedMoveSelectionDown :<C-U>call <SID>MoveSelectionDown(v:count1)<CR>
+nnoremap <silent> <Plug>unimpairedMoveUp            :<C-U>call <SID>Move('--',v:count1,'Up')<CR>
+nnoremap <silent> <Plug>unimpairedMoveDown          :<C-U>call <SID>Move('+',v:count1,'Down')<CR>
+noremap  <silent> <Plug>unimpairedMoveSelectionUp   :<C-U>call <SID>MoveSelectionUp(v:count1)<CR>
+noremap  <silent> <Plug>unimpairedMoveSelectionDown :<C-U>call <SID>MoveSelectionDown(v:count1)<CR>
 
 nmap [e <Plug>unimpairedMoveUp
 nmap ]e <Plug>unimpairedMoveDown

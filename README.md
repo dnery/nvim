@@ -1,21 +1,18 @@
-Kasama's VIM files
-==================
+Danilo's nVim config
+====================
+This repository contains the nvim configuration, including rc-file and plug-ins
+that I use on my linux install (all of them, in fact).
 
-Introduction
+Installation
 ------------
-
-This repository contains the vim configuration, including vimrc and plugins, that I use on every linux box.
-
-Instalation
------------
-
-easiest way to install this is to
+The easiest way to install this is to run
 ```bash
-git clone http://github.com/Kasama/vim ~/.vim
+git clone http://github.com/dnery/nvim ~/.config/nvim
 ```
-then edit your ~/.vimrc to contain
+The first time you open nvim, it will proceed to inst
+[vim-plug](https://github.com/junegunn/vim-plug). From there, just run
 ```vimscript
-:so ~/.vim/vimrc
+:PlugInstall
 ```
-
-the first time you open vim, it will proceed to install [Vundle](https://github.com/VundleVim/Vundle.vim) and then all the plugins specified in the **vimrc**.
+from within nvim, and all the plug-ins listed in my `init.vim` will be
+installed.
