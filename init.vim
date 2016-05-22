@@ -6,11 +6,14 @@ syntax on
 let vimrc=expand('~/.config/nvim/init.vim')
 let plugged_path=expand('~/.config/nvim/plugged/')
 if !isdirectory(plugged_path)
-        echo "Installing Plug..."
-        echo ""
-        !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-        execute '!mkdir -p ' . plugged_path
-        source $MYVIMRC
+        echo "Installing plug..."
+        silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        echo "Creating 'plugged' path..."
+        silent execute '!mkdir -p ' . plugged_path
+        echo "Re-sourcing the configuration file..."
+        silent source $MYVIMRC
+        echo "All done! Just run :PlugInstall when inside nvim to install the plugins!"
+        echo "You also might want re-source the config file with \e[31m ,sv \e[0m after, so solarized colorscheme can be loaded in..."
         finish
 endif
 

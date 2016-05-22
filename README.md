@@ -15,4 +15,6 @@ The first time you open nvim, it will proceed to inst
 :PlugInstall
 ```
 from within nvim, and all the plug-ins listed in my `init.vim` will be
-installed.
+installed. You might also want to type in `,sv` in normal mode to re-source
+the configuration file so the solarized theme can be properly loaded in, if
+you want to use it right off the bat... I'll fix this sometime.
