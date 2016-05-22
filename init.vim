@@ -13,7 +13,7 @@ if !isdirectory(plugged_path)
         echo "Re-sourcing the configuration file..."
         silent source $MYVIMRC
         echo "All done! Just run :PlugInstall when inside nvim to install the plugins!"
-        echo "You also might want re-source the config file with \e[31m ,sv \e[0m after, so solarized colorscheme can be loaded in..."
+        echo "You also might want re-source the config file with <leader>sv (leader=',') after, so solarized colorscheme can be loaded in..."
         finish
 endif
 

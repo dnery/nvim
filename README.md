@@ -3,6 +3,7 @@ Danilo's NeoVim Config
 This repository contains the nvim configuration, including rc-file and plug-ins
 that I use on my current linux install (And will be so on any future install,
 for that matter).
+![label](http://i.imgur.com/r87cC7Z.png "Demo Screenshot")
 
 Installation
 ------------
