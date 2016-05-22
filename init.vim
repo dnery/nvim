@@ -7,14 +7,13 @@ syntax on
 let vimrc=expand('~/.config/nvim/init.vim')
 let plugged_path=expand('~/.config/nvim/plugged/')
 "let plug_readme=expand('~/.config/nvim/bundle/vundle/README.md')
-if !exists('g:loaded_plug')
-        echo "Installing Plug.."
+if !isdirectory(plugged_path)
+        echo "Installing Plug..."
         echo ""
-        "silent !mkdir -p plugged_path
         "silent !git clone https://github.com/gmarik/vundle ~/.config/nvim/bundle/vundle
-        silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
-        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
         "let isPlugUpdated=0
+        finish
 endif
 
 "" Init Plug
@@ -166,7 +165,9 @@ set list listchars=tab:»·,trail:·
 " Highlight 80 col's onward "{
 set t_Co=256
 set background=dark
-colorscheme solarized
+if isdirectory(plugged_path . 'vim-colors-solarized')
+        colorscheme solarized
+endif
 au BufNewFile,BufRead * highlight ColorColumn ctermbg=90
 au BufNewFile,BufRead * call matchadd('ColorColumn', '\%81v', 100)
 "}
