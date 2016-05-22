@@ -1,6 +1,6 @@
 Danilo's NeoVim Config
 ======================
-![label](http://i.imgur.com/r87cC7Z.png "Demo Screenshot")
+![label](http://i.imgur.com/gQyyj8u.png "Demo Screenshot")
 
 This repository contains the nvim configuration, including rc-file and plug-ins
 that I use on my current linux install (And will be so on any future install,
