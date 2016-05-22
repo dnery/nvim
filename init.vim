@@ -3,16 +3,13 @@ syntax on
 " Plug and plugins "{
 
 "" Autoinstall Plug
-"let isPlugUpdated=1
 let vimrc=expand('~/.config/nvim/init.vim')
 let plugged_path=expand('~/.config/nvim/plugged/')
-"let plug_readme=expand('~/.config/nvim/bundle/vundle/README.md')
 if !isdirectory(plugged_path)
         echo "Installing Plug..."
         echo ""
-        "silent !git clone https://github.com/gmarik/vundle ~/.config/nvim/bundle/vundle
-        !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-        "let isPlugUpdated=0
+        execute '!mkdir -p ' . plugged_path
+        execute '!curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
         finish
 endif
 
