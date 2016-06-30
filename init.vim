@@ -157,10 +157,9 @@ set nowrap
 set secure
 set exrc
 set nu
-"set completeopt=menuone
-set pumheight=10
-set completeopt=menu,longest
 set list listchars=tab:»·,trail:·
+set completeopt=menu,menuone,longest
+set pumheight=15
 "}
 
 " Highlight 80 col's onward "{
@@ -231,17 +230,18 @@ let g:ctrlp_use_caching=0
 "}
 
 "Configure Supertab with Ultisnips & Clang Complete "{
-let g:SuperTabDefaultCompletionType='<c-x><c-o>'
-let g:clang_snippets_engine='ultisnips'
+let g:SuperTabDefaultCompletionType="context"
 let g:clang_complete_auto=0
-let g:clang_auto_select=2
+let g:clang_complete_copen=1
 let g:clang_snippets=1
+let g:clang_snippets_engine="ultisnips"
+let g:clang_auto_select=2
 "}
 
 "Ultisnips using tab to expand "{
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
+"let g:UltiSnipsExpandTrigger="<tab>"
+"let g:UltiSnipsJumpForwardTrigger="<tab>"
+"let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
 "}
 
 "Clang to complete macros also (A.K.A. The GLEW Case) "{
@@ -253,8 +253,8 @@ let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
 ""  #else
 ""      #include <GL/glew.h>
 ""  #endif
-let g:clang_complete_macros=1
 let g:clang_user_options='-DCLANG_COMPLETE_ONLY'
+let g:clang_complete_macros=1
 "}
 
 "Disable checkers for special cases "{
@@ -265,6 +265,7 @@ let g:syntastic_disabled_filetypes=['asm']
 ""Remember default name!
 ""  g:syntastic_clang_check_config_file (string; default: '.syntastic_clang_check_config')
 let g:syntastic_c_checkers=['clang_check','cppcheck']
+let g:syntasitc_c_remove_include_errors=1
 "let g:syntastic_c_clang_check_args='-fixit'
 "}
 
@@ -272,6 +273,7 @@ let g:syntastic_c_checkers=['clang_check','cppcheck']
 ""Remember default name!
 ""  g:syntastic_clang_check_config_file (string; default: '.syntastic_clang_check_config')
 let g:syntastic_cpp_checkers=['clang_check','cppcheck']
+let g:syntasitc_cpp_remove_include_errors=1
 "let g:syntastic_cpp_clang_check_args='-fixit'
 "}
 
