@@ -23,6 +23,9 @@ call plug#begin(plugged_path)
 "" Plugins
 Plug 'junegunn/vim-plug'
 
+" Floobits
+Plug 'floobits/floobits-neovim'
+
 " Code analysis
 Plug 'scrooloose/syntastic'
 Plug 'Rip-Rip/clang_complete'
@@ -40,6 +43,7 @@ Plug 'ervandew/supertab'
 Plug 'honza/vim-snippets'
 Plug 'tpope/vim-surround'
 Plug 'Townk/vim-autoclose'
+Plug 'hynek/vim-python-pep8-indent'
 Plug 'terryma/vim-multiple-cursors'
 
 " Code & tool integration
@@ -55,7 +59,8 @@ Plug 'lervag/vimtex'
 Plug 'rust-lang/rust.vim'
 Plug 'tikhomirov/vim-glsl'
 Plug 'vim-airline/vim-airline'
-Plug 'suan/vim-instant-markdown'
+Plug 'neovimhaskell/haskell-vim'
+"Plug 'suan/vim-instant-markdown'
 Plug 'justinmk/vim-syntax-extra'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'altercation/vim-colors-solarized'
@@ -167,6 +172,7 @@ set t_Co=256
 set background=dark
 if isdirectory(plugged_path . 'vim-colors-solarized')
         colorscheme solarized
+        let g:solarized_contrast='high'
 endif
 au BufNewFile,BufRead * highlight ColorColumn ctermbg=90
 au BufNewFile,BufRead * call matchadd('ColorColumn', '\%81v', 100)
@@ -175,7 +181,7 @@ au BufNewFile,BufRead * call matchadd('ColorColumn', '\%81v', 100)
 " AuGroups "{
 augroup DevHelp "{
         autocmd!
-        au Filetype c nnoremap <silent> <buffer> <leader>k :! devhelp -s "<cword>" 2>/dev/null 1>&2 &<CR><CR>
+        au FileType c nnoremap <silent> <buffer> <leader>k :! devhelp -s "<cword>" 2>/dev/null 1>&2 &<CR><CR>
 augroup END "}
 
 augroup HTMlAbbrevs "{
@@ -186,6 +192,7 @@ augroup END "}
 
 augroup Syntaxes "{
         autocmd!
+        au FileType python setl et sw=4 sts=4
         au BufNewFile,BufRead *.asm setlocal syntax=icmc
 augroup END "}
 
@@ -219,8 +226,8 @@ endif "}
 
 " Plugin related configs "{
 " vim-airline config {
-let g:airline_theme='badwolf'
-let g:airline_powerline_fonts=1
+let g:airline_theme='raven'
+let g:airline_powerline_fonts=0
 "}
 
 "CtrlP configs "{
@@ -230,11 +237,11 @@ let g:ctrlp_use_caching=0
 "}
 
 "Configure Supertab with Ultisnips & Clang Complete "{
-let g:SuperTabDefaultCompletionType="context"
+let g:SuperTabDefaultCompletionType='context'
 let g:clang_complete_auto=0
 let g:clang_complete_copen=1
 let g:clang_snippets=1
-let g:clang_snippets_engine="ultisnips"
+let g:clang_snippets_engine='ultisnips'
 let g:clang_auto_select=2
 "}
 
@@ -259,6 +266,11 @@ let g:clang_complete_macros=1
 
 "Disable checkers for special cases "{
 let g:syntastic_disabled_filetypes=['asm']
+"}
+
+"Set up proper linting for C projects "{
+let g:syntastic_python_checkers=['pycodestyle', 'frosted']
+let g:syntastic_python_pycodestyle_args='--ignore=E501,E128'
 "}
 
 "Set up proper linting for C projects "{
