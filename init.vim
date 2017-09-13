@@ -58,6 +58,7 @@ Plug 'lervag/vimtex'
 "Plug 'othree/xml.vim'
 Plug 'rust-lang/rust.vim'
 Plug 'tikhomirov/vim-glsl'
+Plug 'jvirtanen/vim-octave'
 Plug 'vim-airline/vim-airline'
 Plug 'neovimhaskell/haskell-vim'
 "Plug 'suan/vim-instant-markdown'
@@ -109,7 +110,7 @@ vnoremap L $
 nnoremap <silent> <leader>l :setlocal spell!<CR>
 
 "" Create Fold
-nnoremap <silent> <leader>f :set foldmethod=marker<CR>
+"nnoremap <silent> <leader>f :set foldmethod=marker<CR>
 
 "" NerdTree
 nnoremap \ :NERDTreeToggle<CR>
@@ -149,12 +150,9 @@ set tags=./tags;
 set laststatus=2
 set noshowmode
 set whichwrap=b,s,<,>,[,]
-set foldmarker={,}
-set foldmethod=marker
-set foldlevelstart=99
 set expandtab
-set shiftwidth=8
-set softtabstop=8
+set shiftwidth=4
+set softtabstop=4
 set smartindent
 set hlsearch incsearch
 set ignorecase smartcase
@@ -165,6 +163,9 @@ set nu
 set list listchars=tab:»·,trail:·
 set completeopt=menu,menuone,longest
 set pumheight=15
+set foldmethod=marker
+set foldmarker={,}
+set foldopen-=block
 "}
 
 " Highlight 80 col's onward "{
