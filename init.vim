@@ -6,15 +6,14 @@ syntax on
 let vimrc=expand('~/.config/nvim/init.vim')
 let plugged_path=expand('~/.config/nvim/plugged/')
 if !isdirectory(plugged_path)
-        echo "Installing plug..."
-        silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-        echo "Creating 'plugged' path..."
-        silent execute '!mkdir -p ' . plugged_path
-        echo "Re-sourcing the configuration file..."
-        silent source $MYVIMRC
-        echo "All done! Just run :PlugInstall when inside nvim to install the plugins!"
-        echo "You also might want re-source the config file with <leader>sv (leader=',') after, so solarized colorscheme can be loaded in..."
-        finish
+    echo "Installing plug..."
+    silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    echo "Creating 'plugged' path..."
+    silent execute '!mkdir -p ' . plugged_path
+    echo "Re-sourcing the configuration file..."
+    silent source $MYVIMRC
+    echo "All done! Just run :PlugInstall when inside nvim to install the plugins!"
+    finish
 endif
 
 "" Init Plug
@@ -48,7 +47,7 @@ Plug 'terryma/vim-multiple-cursors'
 
 " Code & tool integration
 Plug 'tpope/vim-git'
-Plug 'tpope/vim-rails'
+"Plug 'tpope/vim-rails'
 Plug 'tpope/vim-fugitive'
 Plug 'gioele/vim-autoswap'
 Plug 'airblade/vim-gitgutter'
@@ -64,7 +63,7 @@ Plug 'neovimhaskell/haskell-vim'
 "Plug 'suan/vim-instant-markdown'
 Plug 'justinmk/vim-syntax-extra'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'altercation/vim-colors-solarized'
+"Plug 'altercation/vim-colors-solarized'
 "" End Plugins
 
 call plug#end()
@@ -95,16 +94,17 @@ nnoremap <silent> <leader>ev :vsplit $MYVIMRC<CR>
 nnoremap <silent> <leader>sv :source $MYVIMRC<CR>
 
 "" Press Space to turn off highlighting and clear any message already displayed.
-nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>l
+nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
 
 "" Find trailing whitespace
 nnoremap <silent> <leader>hs /\s$<CR>
 
+"" NOT SURE I WANT THIS
 "" Using H and L as 0 and $
-nnoremap H 0
-nnoremap L $
-vnoremap H 0
-vnoremap L $
+"nnoremap H 0
+"nnoremap L $
+"vnoremap H 0
+"vnoremap L $
 
 "" Spelling
 nnoremap <silent> <leader>l :setlocal spell!<CR>
@@ -122,27 +122,15 @@ nnoremap <silent> <leader>t :TagbarOpenAutoClose<CR>
 nnoremap <C-J> <C-E>
 nnoremap <C-K> <C-Y>
 
-"" Tabs Commands
-nnoremap <C-S><C-W> :tabclose<CR>
-nnoremap <C-S><C-O> :tabnew<CR>
+"" I DON'T USE TABS
+"nnoremap <C-S><C-W> :tabclose<CR>
+"nnoremap <C-S><C-O> :tabnew<CR>
 
 "" Save as root
 cmap w!! w !sudo tee % > /dev/null
 
 "" Ident entire file
 nnoremap <silent> <leader>= gg=G<C-O><C-O>
-"}
-
-"" Bubbling blocks do not work!
-
-" Bubble single lines "{
-"nmap <M-J> @=']e'<CR>
-"nmap <M-K> @='[e'<CR>
-"}
-
-" Bubble multiple lines "{
-"vmap <M-K> [egv
-"vmap <M-J> ]egv
 "}
 
 " Settings "{
@@ -168,61 +156,62 @@ set foldmarker={,}
 set foldopen-=block
 "}
 
-" Highlight 80 col's onward "{
+" Set coloring stuff "{
 set t_Co=256
 set background=dark
-if isdirectory(plugged_path . 'vim-colors-solarized')
-        colorscheme solarized
-        let g:solarized_contrast='high'
-endif
+colorscheme default
+"}
+
+" Highlight 80 col's onward "{
 au BufNewFile,BufRead * highlight ColorColumn ctermbg=90
 au BufNewFile,BufRead * call matchadd('ColorColumn', '\%81v', 100)
 "}
 
 " AuGroups "{
 augroup DevHelp "{
-        autocmd!
-        au FileType c nnoremap <silent> <buffer> <leader>k :! devhelp -s "<cword>" 2>/dev/null 1>&2 &<CR><CR>
+    autocmd!
+    au FileType c nnoremap <silent> <buffer> <leader>k :! devhelp -s "<cword>" 2>/dev/null 1>&2 &<CR><CR>
 augroup END "}
 
 augroup HTMlAbbrevs "{
-        autocmd!
-        autocmd BufNewFile,BufRead *.html iabbrev << &lt;
-        autocmd BufNewFile,BufRead *.html iabbrev >> &gt;
+    autocmd!
+    autocmd BufNewFile,BufRead *.html iabbrev << &lt;
+    autocmd BufNewFile,BufRead *.html iabbrev >> &gt;
 augroup END "}
 
-augroup Syntaxes "{
-        autocmd!
-        au FileType python setl et sw=4 sts=4
-        au BufNewFile,BufRead *.asm setlocal syntax=icmc
-augroup END "}
+"" NOT SURE I WANT THIS
+"augroup Syntaxes "{
+"        autocmd!
+"        au FileType python setl et sw=4 sts=4
+"        au BufNewFile,BufRead *.asm setlocal syntax=icmc
+"augroup END "}
 
 augroup Comments "{
-        autocmd!
-        au BufNewFile,BufRead *.c nnoremap <silent> <buffer> <leader>q I//<esc>:s/\v(\/\/+)\1+//e<CR>
-        au BufNewFile,BufRead *.java nnoremap <silent> <buffer> <leader>q I//<esc>:s/\v(\/\/+)\1+//e<CR>
-        au BufNewFile,BufRead *.js nnoremap <silent> <buffer> <leader>q I//<esc>:s/\v(\/\/+)\1+//e<CR>
-        au BufNewFile,BufRead *.rb nnoremap <silent> <buffer> <leader>q I#<esc>:s/\v(#+)\1+//e<CR>
-        au BufNewFile,BufRead *.py nnoremap <silent> <buffer> <leader>q I#<esc>:s/\v(#+)\1+//e<CR>
-        au Syntax vim nnoremap <silent> <buffer> <leader>q I"<esc>:s/\v("+)\1+//e<CR>
+    autocmd!
+    au BufNewFile,BufRead *.c nnoremap <silent> <buffer> <leader>q I//<esc>:s/\v(\/\/+)\1+//e<CR>
+    au BufNewFile,BufRead *.java nnoremap <silent> <buffer> <leader>q I//<esc>:s/\v(\/\/+)\1+//e<CR>
+    au BufNewFile,BufRead *.js nnoremap <silent> <buffer> <leader>q I//<esc>:s/\v(\/\/+)\1+//e<CR>
+    au BufNewFile,BufRead *.rb nnoremap <silent> <buffer> <leader>q I#<esc>:s/\v(#+)\1+//e<CR>
+    au BufNewFile,BufRead *.py nnoremap <silent> <buffer> <leader>q I#<esc>:s/\v(#+)\1+//e<CR>
+    au Syntax vim nnoremap <silent> <buffer> <leader>q I"<esc>:s/\v("+)\1+//e<CR>
 augroup END "}
 
 augroup PlantUML "{
-        autocmd!
-        au BufNewFile,BufRead *.uml setlocal syntax=plantuml
-        au BufNewFile,BufRead *.puml setlocal syntax=plantuml
-        au BufNewFile,BufRead *.puml nnoremap <silent> <leader>w :!plantuml -tsvg %<CR><CR>
+    autocmd!
+    au BufNewFile,BufRead *.uml setlocal syntax=plantuml
+    au BufNewFile,BufRead *.puml setlocal syntax=plantuml
+    au BufNewFile,BufRead *.puml nnoremap <silent> <leader>w :!plantuml -tsvg %<CR><CR>
 augroup END "}
 
 augroup CommitSpelling "{
-        " Git commits.
-        autocmd FileType gitcommit setlocal spell
+    " Git commits.
+    autocmd FileType gitcommit setlocal spell
 augroup END "}
 "}
 
 " Enable mouse "{
 if has('mouse')
-        set mouse=a
+    set mouse=a
 endif "}
 
 " Plugin related configs "{
@@ -247,9 +236,9 @@ let g:clang_auto_select=2
 "}
 
 "Ultisnips using tab to expand "{
-"let g:UltiSnipsExpandTrigger="<tab>"
-"let g:UltiSnipsJumpForwardTrigger="<tab>"
-"let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
 "}
 
 "Clang to complete macros also (A.K.A. The GLEW Case) "{
@@ -269,7 +258,7 @@ let g:clang_complete_macros=1
 let g:syntastic_disabled_filetypes=['asm']
 "}
 
-"Set up proper linting for C projects "{
+"Set up proper linting for Python projects "{
 let g:syntastic_python_checkers=['pycodestyle', 'frosted']
 let g:syntastic_python_pycodestyle_args='--ignore=E501,E128'
 "}
@@ -277,7 +266,7 @@ let g:syntastic_python_pycodestyle_args='--ignore=E501,E128'
 "Set up proper linting for C projects "{
 ""Remember default name!
 ""  g:syntastic_clang_check_config_file (string; default: '.syntastic_clang_check_config')
-let g:syntastic_c_checkers=['clang_check','cppcheck']
+let g:syntastic_c_checkers=['clang_check', 'cppcheck']
 let g:syntasitc_c_remove_include_errors=1
 "let g:syntastic_c_clang_check_args='-fixit'
 "}
@@ -285,7 +274,7 @@ let g:syntasitc_c_remove_include_errors=1
 "Set up proper linting for C++ projects "{
 ""Remember default name!
 ""  g:syntastic_clang_check_config_file (string; default: '.syntastic_clang_check_config')
-let g:syntastic_cpp_checkers=['clang_check','cppcheck']
+let g:syntastic_cpp_checkers=['clang_check', 'cppcheck']
 let g:syntasitc_cpp_remove_include_errors=1
 "let g:syntastic_cpp_clang_check_args='-fixit'
 "}
@@ -298,26 +287,26 @@ let g:syntastic_glsl_options='-oglsl -strict'
 "}
 
 "" Functions {
-" Bubble lines {
+" Bubble lines (unimpaired) {
 function! s:Move(cmd, count, map) abort
-        normal! m`
-        silent! exe 'move'.a:cmd.a:count
-        norm! ``
-        silent! call repeat#set("\<Plug>unimpairedMove".a:map, a:count)
+    normal! m`
+    silent! exe 'move'.a:cmd.a:count
+    norm! ``
+    silent! call repeat#set("\<Plug>unimpairedMove".a:map, a:count)
 endfunction
 
 function! s:MoveSelectionUp(count) abort
-        normal! m`
-        silent! exe "'<,'>move'<--".a:count
-        norm! ``
-        silent! call repeat#set("\<Plug>unimpairedMoveSelectionUp", a:count)
+    normal! m`
+    silent! exe "'<,'>move'<--".a:count
+    norm! ``
+    silent! call repeat#set("\<Plug>unimpairedMoveSelectionUp", a:count)
 endfunction
 
 function! s:MoveSelectionDown(count) abort
-        normal! m`
-        norm! ``
-        exe "'<,'>move'>+".a:count
-        silent! call repeat#set("\<Plug>unimpairedMoveSelectionDown", a:count)
+    normal! m`
+    norm! ``
+    exe "'<,'>move'>+".a:count
+    silent! call repeat#set("\<Plug>unimpairedMoveSelectionDown", a:count)
 endfunction
 "}
 
