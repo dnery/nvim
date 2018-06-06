@@ -1,8 +1,7 @@
 syntax on
 
-" Plug and plugins "{
-
-"" Autoinstall Plug
+" Plugins "{
+" Auto Plug
 let vimrc=expand('~/.config/nvim/init.vim')
 let plugged_path=expand('~/.config/nvim/plugged/')
 if !isdirectory(plugged_path)
@@ -16,10 +15,8 @@ if !isdirectory(plugged_path)
     finish
 endif
 
-"" Init Plug
+" Init Plug
 call plug#begin(plugged_path)
-
-"" Plugins
 Plug 'junegunn/vim-plug'
 
 " Floobits
@@ -42,7 +39,6 @@ Plug 'ervandew/supertab'
 Plug 'honza/vim-snippets'
 Plug 'tpope/vim-surround'
 Plug 'Townk/vim-autoclose'
-Plug 'hynek/vim-python-pep8-indent'
 Plug 'terryma/vim-multiple-cursors'
 
 " Code & tool integration
@@ -50,7 +46,7 @@ Plug 'tpope/vim-git'
 "Plug 'tpope/vim-rails'
 Plug 'tpope/vim-fugitive'
 Plug 'gioele/vim-autoswap'
-Plug 'airblade/vim-gitgutter'
+"Plug 'airblade/vim-gitgutter'
 
 " Code colors & syntax
 Plug 'lervag/vimtex'
@@ -64,11 +60,19 @@ Plug 'neovimhaskell/haskell-vim'
 Plug 'justinmk/vim-syntax-extra'
 Plug 'vim-airline/vim-airline-themes'
 "Plug 'altercation/vim-colors-solarized'
-"" End Plugins
 
+" Python stuff
+Plug 'davidhalter/jedi-vim'
+Plug 'hynek/vim-python-pep8-indent'
+
+" Javascript stuff
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
+
+" Plug Done
 call plug#end()
 filetype plugin indent on
-" Plug Done
+"}
 
 " Leader key "{
 let mapleader = ","
@@ -158,7 +162,7 @@ set foldopen-=block
 
 " Set coloring stuff "{
 set t_Co=256
-set background=dark
+set background=light
 colorscheme default
 "}
 
@@ -260,7 +264,7 @@ let g:syntastic_disabled_filetypes=['asm']
 
 "Set up proper linting for Python projects "{
 let g:syntastic_python_checkers=['pycodestyle', 'frosted']
-let g:syntastic_python_pycodestyle_args='--ignore=E501,E128'
+let g:syntastic_python_pycodestyle_args='--ignore=E501,E128,E226,E231'
 "}
 
 "Set up proper linting for C projects "{
