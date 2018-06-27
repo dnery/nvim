@@ -41,12 +41,13 @@ Plug 'tpope/vim-surround'
 Plug 'Townk/vim-autoclose'
 Plug 'terryma/vim-multiple-cursors'
 
-" Code & tool integration
+" Code & tools integration
 Plug 'tpope/vim-git'
 "Plug 'tpope/vim-rails'
 Plug 'tpope/vim-fugitive'
 Plug 'gioele/vim-autoswap'
 "Plug 'airblade/vim-gitgutter'
+Plug 'merlinrebrovic/focus.vim'
 
 " Code colors & syntax
 Plug 'lervag/vimtex'
@@ -60,6 +61,9 @@ Plug 'neovimhaskell/haskell-vim'
 Plug 'justinmk/vim-syntax-extra'
 Plug 'vim-airline/vim-airline-themes'
 "Plug 'altercation/vim-colors-solarized'
+
+" R stuff
+Plug 'jalvesaq/Nvim-R'
 
 " Python stuff
 Plug 'davidhalter/jedi-vim'
@@ -148,7 +152,7 @@ set softtabstop=4
 set smartindent
 set hlsearch incsearch
 set ignorecase smartcase
-set nowrap
+"set nowrap
 set secure
 set exrc
 set nu
