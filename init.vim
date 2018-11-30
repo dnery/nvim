@@ -24,7 +24,9 @@ Plug 'floobits/floobits-neovim'
 
 " Code analysis
 Plug 'scrooloose/syntastic'
+Plug 'davidhalter/jedi-vim'
 Plug 'Rip-Rip/clang_complete'
+Plug 'hynek/vim-python-pep8-indent'
 
 " Code navigation
 Plug 'kien/ctrlp.vim'
@@ -32,7 +34,6 @@ Plug 'majutsushi/tagbar'
 Plug 'scrooloose/nerdtree'
 
 " Code editing-boosters
-"Plug 'vim-scripts/c.vim'
 Plug 'chrisbra/NrrwRgn'
 Plug 'SirVer/ultisnips'
 Plug 'ervandew/supertab'
@@ -43,35 +44,26 @@ Plug 'terryma/vim-multiple-cursors'
 
 " Code & tools integration
 Plug 'tpope/vim-git'
-"Plug 'tpope/vim-rails'
 Plug 'tpope/vim-fugitive'
 Plug 'gioele/vim-autoswap'
-"Plug 'airblade/vim-gitgutter'
 Plug 'merlinrebrovic/focus.vim'
 
 " Code colors & syntax
+Plug 'mxw/vim-jsx'
 Plug 'lervag/vimtex'
-"Plug 'othree/xml.vim'
+Plug 'jalvesaq/Nvim-R'
 Plug 'rust-lang/rust.vim'
 Plug 'tikhomirov/vim-glsl'
 Plug 'jvirtanen/vim-octave'
 Plug 'vim-airline/vim-airline'
 Plug 'neovimhaskell/haskell-vim'
-"Plug 'suan/vim-instant-markdown'
 Plug 'justinmk/vim-syntax-extra'
+Plug 'mfukar/robotframework-vim'
 Plug 'vim-airline/vim-airline-themes'
-"Plug 'altercation/vim-colors-solarized'
-
-" R stuff
-Plug 'jalvesaq/Nvim-R'
-
-" Python stuff
-Plug 'davidhalter/jedi-vim'
-Plug 'hynek/vim-python-pep8-indent'
-
-" Javascript stuff
+Plug 'altercation/vim-colors-solarized'
+Plug 'martinda/Jenkinsfile-vim-syntax'
 Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
+Plug 'vim-scripts/groovy.vim'
 
 " Plug Done
 call plug#end()
@@ -142,37 +134,37 @@ nnoremap <silent> <leader>= gg=G<C-O><C-O>
 "}
 
 " Settings "{
-set tags=./tags;
-set laststatus=2
-set noshowmode
-set whichwrap=b,s,<,>,[,]
-set expandtab
-set shiftwidth=4
-set softtabstop=4
-set smartindent
-set hlsearch incsearch
-set ignorecase smartcase
-"set nowrap
-set secure
-set exrc
-set nu
-set list listchars=tab:»·,trail:·
-set completeopt=menu,menuone,longest
-set pumheight=15
-set foldmethod=marker
-set foldmarker={,}
-set foldopen-=block
+set tags=./tags;                        " description
+set laststatus=2                        " description
+set noshowmode                          " description
+set whichwrap=b,s,<,>,[,]               " description
+set expandtab                           " description
+set shiftwidth=4                        " description
+set softtabstop=4                       " description
+set smartindent                         " description
+set hlsearch incsearch                  " description
+set ignorecase smartcase                " description
+"set nowrap                             " description
+set secure                              " description
+set exrc                                " description
+set nu                                  " description
+set list listchars=tab:»·,trail:·       " description
+set completeopt=menu,menuone,longest    " description
+set pumheight=15                        " description
+set foldmethod=marker                   " description
+set foldmarker={,}                      " description
+set foldopen-=block                     " description
 "}
 
 " Set coloring stuff "{
 set t_Co=256
-set background=light
-colorscheme default
+set background=dark
+colorscheme solarized
 "}
 
 " Highlight 80 col's onward "{
 au BufNewFile,BufRead * highlight ColorColumn ctermbg=90
-au BufNewFile,BufRead * call matchadd('ColorColumn', '\%81v', 100)
+au BufNewFile,BufRead * call matchadd('ColorColumn', '\%121v', 100)
 "}
 
 " AuGroups "{
