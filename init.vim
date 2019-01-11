@@ -154,6 +154,7 @@ set pumheight=15                        " description
 set foldmethod=marker                   " description
 set foldmarker={,}                      " description
 set foldopen-=block                     " description
+set guicursor=
 "}
 
 " Set coloring stuff "{
