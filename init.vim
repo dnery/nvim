@@ -19,9 +19,6 @@ endif
 call plug#begin(plugged_path)
 Plug 'junegunn/vim-plug'
 
-" Floobits
-Plug 'floobits/floobits-neovim'
-
 " Code analysis
 Plug 'scrooloose/syntastic'
 Plug 'davidhalter/jedi-vim'
@@ -39,7 +36,7 @@ Plug 'SirVer/ultisnips'
 Plug 'ervandew/supertab'
 Plug 'honza/vim-snippets'
 Plug 'tpope/vim-surround'
-Plug 'Townk/vim-autoclose'
+Plug 'jiangmiao/auto-pairs'
 Plug 'terryma/vim-multiple-cursors'
 
 " Code & tools integration
