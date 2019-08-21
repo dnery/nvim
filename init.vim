@@ -96,7 +96,6 @@ nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
 "" Find trailing whitespace
 nnoremap <silent> <leader>hs /\s$<CR>
 
-"" NOT SURE I WANT THIS
 "" Using H and L as 0 and $
 "nnoremap H 0
 "nnoremap L $
@@ -177,7 +176,6 @@ augroup HTMlAbbrevs "{
     autocmd BufNewFile,BufRead *.html iabbrev >> &gt;
 augroup END "}
 
-"" NOT SURE I WANT THIS
 "augroup Syntaxes "{
 "        autocmd!
 "        au FileType python setl et sw=4 sts=4
@@ -281,41 +279,5 @@ let g:syntasitc_cpp_remove_include_errors=1
 ""Don't forget the magic comment!
 ""  // profile: (glslv|glslg|glslf)
 let g:syntastic_glsl_options='-oglsl -strict'
-"}
-"}
-
-"" Functions {
-" Bubble lines (unimpaired) {
-function! s:Move(cmd, count, map) abort
-    normal! m`
-    silent! exe 'move'.a:cmd.a:count
-    norm! ``
-    silent! call repeat#set("\<Plug>unimpairedMove".a:map, a:count)
-endfunction
-
-function! s:MoveSelectionUp(count) abort
-    normal! m`
-    silent! exe "'<,'>move'<--".a:count
-    norm! ``
-    silent! call repeat#set("\<Plug>unimpairedMoveSelectionUp", a:count)
-endfunction
-
-function! s:MoveSelectionDown(count) abort
-    normal! m`
-    norm! ``
-    exe "'<,'>move'>+".a:count
-    silent! call repeat#set("\<Plug>unimpairedMoveSelectionDown", a:count)
-endfunction
-"}
-
-nnoremap <silent> <Plug>unimpairedMoveUp            :<C-U>call <SID>Move('--',v:count1,'Up')<CR>
-nnoremap <silent> <Plug>unimpairedMoveDown          :<C-U>call <SID>Move('+',v:count1,'Down')<CR>
-noremap  <silent> <Plug>unimpairedMoveSelectionUp   :<C-U>call <SID>MoveSelectionUp(v:count1)<CR>
-noremap  <silent> <Plug>unimpairedMoveSelectionDown :<C-U>call <SID>MoveSelectionDown(v:count1)<CR>
-
-nmap [e <Plug>unimpairedMoveUp
-nmap ]e <Plug>unimpairedMoveDown
-xmap [e <Plug>unimpairedMoveSelectionUp
-xmap ]e <Plug>unimpairedMoveSelectionDown
 "}
 "}
