@@ -27,14 +27,14 @@ Plug 'hynek/vim-python-pep8-indent'
 
 " Code navigation
 Plug 'kien/ctrlp.vim'
-Plug 'majutsushi/tagbar'
+"Plug 'majutsushi/tagbar'
 Plug 'scrooloose/nerdtree'
 
 " Code editing-boosters
-Plug 'chrisbra/NrrwRgn'
-Plug 'SirVer/ultisnips'
-Plug 'ervandew/supertab'
-Plug 'honza/vim-snippets'
+"Plug 'chrisbra/NrrwRgn'
+"Plug 'SirVer/ultisnips'
+"Plug 'ervandew/supertab'
+"Plug 'honza/vim-snippets'
 Plug 'tpope/vim-surround'
 Plug 'jiangmiao/auto-pairs'
 Plug 'terryma/vim-multiple-cursors'
@@ -61,6 +61,7 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'martinda/Jenkinsfile-vim-syntax'
 Plug 'pangloss/vim-javascript'
 Plug 'vim-scripts/groovy.vim'
+Plug 'cespare/vim-toml'
 
 " Plug Done
 call plug#end()
@@ -153,13 +154,13 @@ set foldopen-=block                     " description
 set guicursor=
 "}
 
-" Set coloring stuff "{
+" Coloring "{
 set t_Co=256
-set background=dark
-colorscheme solarized
+colorscheme default
+set background=light
 "}
 
-" Highlight 80 col's onward "{
+" Highlight 120 col's onward "{
 au BufNewFile,BufRead * highlight ColorColumn ctermbg=90
 au BufNewFile,BufRead * call matchadd('ColorColumn', '\%121v', 100)
 "}
@@ -176,7 +177,7 @@ augroup HTMlAbbrevs "{
     autocmd BufNewFile,BufRead *.html iabbrev >> &gt;
 augroup END "}
 
-"augroup Syntaxes "{
+"augroup ICMC ASM Syntax "{
 "        autocmd!
 "        au FileType python setl et sw=4 sts=4
 "        au BufNewFile,BufRead *.asm setlocal syntax=icmc
@@ -200,7 +201,6 @@ augroup PlantUML "{
 augroup END "}
 
 augroup CommitSpelling "{
-    " Git commits.
     autocmd FileType gitcommit setlocal spell
 augroup END "}
 "}
@@ -211,6 +211,10 @@ if has('mouse')
 endif "}
 
 " Plugin related configs "{
+" FocusMode configs {
+let g:focusmode_width=120
+" }
+
 " vim-airline config {
 let g:airline_theme='raven'
 let g:airline_powerline_fonts=0
