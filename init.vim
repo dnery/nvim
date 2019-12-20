@@ -131,33 +131,33 @@ nnoremap <silent> <leader>= gg=G<C-O><C-O>
 "}
 
 " Settings "{
-set tags=./tags;                        " description
-set laststatus=2                        " description
-set noshowmode                          " description
-set whichwrap=b,s,<,>,[,]               " description
-set expandtab                           " description
-set shiftwidth=4                        " description
-set softtabstop=4                       " description
-set smartindent                         " description
-set hlsearch incsearch                  " description
-set ignorecase smartcase                " description
-"set nowrap                             " description
-set secure                              " description
-set exrc                                " description
-set nu                                  " description
-set list listchars=tab:»·,trail:·       " description
-set completeopt=menu,menuone,longest    " description
-set pumheight=15                        " description
-set foldmethod=marker                   " description
-set foldmarker={,}                      " description
-set foldopen-=block                     " description
+set tags=./tags;                        " <description>
+set laststatus=2                        " <description>
+set noshowmode                          " <description>
+set whichwrap=b,s,<,>,[,]               " <description>
+set expandtab                           " <description>
+set shiftwidth=4                        " <description>
+set softtabstop=4                       " <description>
+set smartindent                         " <description>
+set hlsearch incsearch                  " <description>
+set ignorecase smartcase                " <description>
+"set nowrap                             " Do I not want this???
+set secure                              " <description>
+set exrc                                " <description>
+set nu                                  " <description>
+set list listchars=tab:»·,trail:·       " <description>
+set completeopt=menu,menuone,longest    " <description>
+set pumheight=15                        " <description>
+set foldmethod=marker                   " <description>
+set foldmarker={,}                      " <description>
+set foldopen-=block                     " <description>
 set guicursor=
 "}
 
 " Coloring "{
 set t_Co=256
 colorscheme default
-set background=light
+set background=dark
 "}
 
 " Highlight 120 col's onward "{
