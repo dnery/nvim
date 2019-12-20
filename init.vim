@@ -1,7 +1,8 @@
 syntax on
 
+
 " Plugins "{
-" Auto Plug
+
 let vimrc=expand('~/.config/nvim/init.vim')
 let plugged_path=expand('~/.config/nvim/plugged/')
 if !isdirectory(plugged_path)
@@ -15,35 +16,30 @@ if !isdirectory(plugged_path)
     finish
 endif
 
-" Init Plug
 call plug#begin(plugged_path)
 Plug 'junegunn/vim-plug'
 
-" Code analysis
-Plug 'scrooloose/syntastic'
-Plug 'davidhalter/jedi-vim'
-Plug 'Rip-Rip/clang_complete'
-Plug 'hynek/vim-python-pep8-indent'
-
-" Code navigation
-Plug 'kien/ctrlp.vim'
+" Active assistance
+Plug 'merlinrebrovic/focus.vim'         " <leader>fmt       -> Toggle focus mode
+Plug 'ctrlpvim/ctrlp.vim'               " <c-p>             -> Fuzzy file finding
+Plug 'scrooloose/nerdtree'              " <c-b>             -> Toggle NERDTree sidebar
+Plug 'tpope/vim-surround'               " https://github.com/tpope/vim-surround#surroundvim
+Plug 'terryma/vim-multiple-cursors'     " <c-n>             -> Start/add multicursor in next match
 "Plug 'majutsushi/tagbar'
-Plug 'scrooloose/nerdtree'
 
-" Code editing-boosters
+" Passive assistance
+Plug 'scrooloose/syntastic'             " LINTING
+Plug 'Rip-Rip/clang_complete'           " COMPLETION
+Plug 'gioele/vim-autoswap'              " Less headache with swap files
+Plug 'tpope/vim-git'                    " Gitgutter pt. 1
+Plug 'tpope/vim-fugitive'               " Gitgutter pt. 2
+Plug 'hynek/vim-python-pep8-indent'     " Literally PEP8 compliant Python indentation
+Plug 'Xuyuanp/nerdtree-git-plugin'      " NERDTree also displays info on git flags
+Plug 'jiangmiao/auto-pairs'             " Insert pairs to commong markers. Mixed feelings...
 "Plug 'chrisbra/NrrwRgn'
 "Plug 'SirVer/ultisnips'
 "Plug 'ervandew/supertab'
 "Plug 'honza/vim-snippets'
-Plug 'tpope/vim-surround'
-Plug 'jiangmiao/auto-pairs'
-Plug 'terryma/vim-multiple-cursors'
-
-" Code & tools integration
-Plug 'tpope/vim-git'
-Plug 'tpope/vim-fugitive'
-Plug 'gioele/vim-autoswap'
-Plug 'merlinrebrovic/focus.vim'
 
 " Code colors & syntax
 Plug 'mxw/vim-jsx'
@@ -63,57 +59,61 @@ Plug 'pangloss/vim-javascript'
 Plug 'vim-scripts/groovy.vim'
 Plug 'cespare/vim-toml'
 
-" Plug Done
 call plug#end()
 filetype plugin indent on
+
 "}
+
 
 " Leader key "{
 let mapleader = ","
 let localleader = ";"
 "}
 
-" Case insensitive :wq "{
+
+" Enable mouse "{
+if has('mouse')
+    set mouse=a
+endif
+"}
+
+
+" Mappings "{
+
+" Case insensitive :wq
 command! W w
 command! Q q
 command! Wq wq
 command! WQ wq
-"}
 
-" Mappings "{
 "" Consider long lines separate lines
 nnoremap j gj
 nnoremap k gk
 nnoremap <UP> g<UP>
 nnoremap <DOWN> g<DOWN>
 
-"" edit and source vimrc file
-nnoremap <silent> <leader>ev :vsplit $MYVIMRC<CR>
-nnoremap <silent> <leader>sv :source $MYVIMRC<CR>
+"" Edit or Source Vimrc file
+nnoremap <silent> <leader>ve :vsplit $MYVIMRC<CR>
+nnoremap <silent> <leader>vs :source $MYVIMRC<CR>
 
-"" Press Space to turn off highlighting and clear any message already displayed.
-nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
-
-"" Find trailing whitespace
+"" Highlight trailing whiteSpace
 nnoremap <silent> <leader>hs /\s$<CR>
 
+"" Space to turn off highlighting and clear any messages
+"nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
+nnoremap <silent> <space> :nohl<bar>:echo<CR>
+
 "" Using H and L as 0 and $
-"nnoremap H 0
-"nnoremap L $
-"vnoremap H 0
-"vnoremap L $
+nnoremap H 0
+nnoremap L $
+vnoremap H 0
+vnoremap L $
 
 "" Spelling
 nnoremap <silent> <leader>l :setlocal spell!<CR>
 
 "" Create Fold
 "nnoremap <silent> <leader>f :set foldmethod=marker<CR>
-
-"" NerdTree
-nnoremap \ :NERDTreeToggle<CR>
-
-" Tagbar toggle
-nnoremap <silent> <leader>t :TagbarOpenAutoClose<CR>
 
 "" Better Scrolling
 nnoremap <C-J> <C-E>
@@ -128,9 +128,12 @@ cmap w!! w !sudo tee % > /dev/null
 
 "" Ident entire file
 nnoremap <silent> <leader>= gg=G<C-O><C-O>
+
 "}
 
+
 " Settings "{
+
 set tags=./tags;                        " <description>
 set laststatus=2                        " <description>
 set noshowmode                          " <description>
@@ -152,20 +155,26 @@ set foldmethod=marker                   " <description>
 set foldmarker={,}                      " <description>
 set foldopen-=block                     " <description>
 set guicursor=
+
 "}
 
+
 " Coloring "{
+
+" Termcolors
 set t_Co=256
 colorscheme default
 set background=dark
-"}
 
-" Highlight 120 col's onward "{
+" Highlight 120 col's onward
 au BufNewFile,BufRead * highlight ColorColumn ctermbg=90
 au BufNewFile,BufRead * call matchadd('ColorColumn', '\%121v', 100)
+
 "}
 
+
 " AuGroups "{
+
 augroup DevHelp "{
     autocmd!
     au FileType c nnoremap <silent> <buffer> <leader>k :! devhelp -s "<cword>" 2>/dev/null 1>&2 &<CR><CR>
@@ -203,46 +212,38 @@ augroup END "}
 augroup CommitSpelling "{
     autocmd FileType gitcommit setlocal spell
 augroup END "}
+
 "}
 
-" Enable mouse "{
-if has('mouse')
-    set mouse=a
-endif "}
 
-" Plugin related configs "{
-" FocusMode configs {
+" Plugin configs "{
+
+" vim-focus "{
 let g:focusmode_width=120
-" }
+"}
 
-" vim-airline config {
+" vim-airline "{
 let g:airline_theme='raven'
 let g:airline_powerline_fonts=0
 "}
 
-"CtrlP configs "{
+" CtrlP "{
 let g:ctrlp_map='<c-p>'
 let g:ctrlp_cmd='CtrlP'
-let g:ctrlp_use_caching=0
+let g:ctrlp_working_path_mode='ra'
 "}
 
-"Configure Supertab with Ultisnips & Clang Complete "{
-let g:SuperTabDefaultCompletionType='context'
-let g:clang_complete_auto=0
-let g:clang_complete_copen=1
-let g:clang_snippets=1
-let g:clang_snippets_engine='ultisnips'
-let g:clang_auto_select=2
+" NerdTree "{
+map <c-b> :NERDTreeToggle<CR>
 "}
 
-"Ultisnips using tab to expand "{
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
+" Tagbar "{
+"nnoremap <silent> <leader>t :TagbarOpenAutoClose<CR>
 "}
 
-"Clang to complete macros also (A.K.A. The GLEW Case) "{
-""When using Glew, rememer!
+" Clang "{
+""Set Clang to complete macros (useful for OpenGL wranglers)
+""When using Glew, rememer:
 ""  #ifdef CLANG_COMPLETE_ONLY
 ""      #define GL_GLEXT_PROTOTYPES
 ""      #include <GL/gl.h>
@@ -254,16 +255,11 @@ let g:clang_user_options='-DCLANG_COMPLETE_ONLY'
 let g:clang_complete_macros=1
 "}
 
-"Disable checkers for special cases "{
+" Syntastic: disabled checkers "{
 let g:syntastic_disabled_filetypes=['asm']
 "}
 
-"Set up proper linting for Python projects "{
-let g:syntastic_python_checkers=['pycodestyle', 'frosted']
-let g:syntastic_python_pycodestyle_args='--ignore=E501,E128,E226,E231'
-"}
-
-"Set up proper linting for C projects "{
+" Syntastic: C linting "{
 ""Remember default name!
 ""  g:syntastic_clang_check_config_file (string; default: '.syntastic_clang_check_config')
 let g:syntastic_c_checkers=['clang_check', 'cppcheck']
@@ -271,7 +267,7 @@ let g:syntasitc_c_remove_include_errors=1
 "let g:syntastic_c_clang_check_args='-fixit'
 "}
 
-"Set up proper linting for C++ projects "{
+" Syntastic: C++ linting "{
 ""Remember default name!
 ""  g:syntastic_clang_check_config_file (string; default: '.syntastic_clang_check_config')
 let g:syntastic_cpp_checkers=['clang_check', 'cppcheck']
@@ -279,9 +275,15 @@ let g:syntasitc_cpp_remove_include_errors=1
 "let g:syntastic_cpp_clang_check_args='-fixit'
 "}
 
-"Set up proper linting for GLSL files "{
+" Syntastic: GLSL linting "{
 ""Don't forget the magic comment!
 ""  // profile: (glslv|glslg|glslf)
 let g:syntastic_glsl_options='-oglsl -strict'
 "}
+
+" Syntastic: Python linting "{
+let g:syntastic_python_checkers=['pycodestyle', 'frosted']
+let g:syntastic_python_pycodestyle_args='--ignore=E501,E128,E226,E231'
+"}
+
 "}
