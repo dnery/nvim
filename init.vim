@@ -35,7 +35,7 @@ Plug 'tpope/vim-git'                    " Gitgutter pt. 1
 Plug 'tpope/vim-fugitive'               " Gitgutter pt. 2
 Plug 'hynek/vim-python-pep8-indent'     " Literally PEP8 compliant Python indentation
 Plug 'Xuyuanp/nerdtree-git-plugin'      " NERDTree also displays info on git flags
-Plug 'jiangmiao/auto-pairs'             " Insert pairs to commong markers. Mixed feelings...
+"Plug 'jiangmiao/auto-pairs'            " Insert pairs to commong markers. Mixed feelings...
 "Plug 'chrisbra/NrrwRgn'
 "Plug 'SirVer/ultisnips'
 "Plug 'ervandew/supertab'
@@ -68,16 +68,28 @@ call plug#end()
 
 filetype plugin indent on
 
-
 " Leader key "{
 let mapleader = ","
 let localleader = ";"
 "}
 
-
 " Enable mouse "{
 if has('mouse')
     set mouse=a
+endif
+"}
+
+" Caret configs "{
+" Check my github gist!!!
+if executable("gnome-terminal-cursor")
+    au VimEnter,InsertLeave * silent execute "!gnome-terminal-cursor block"
+    au InsertEnter *
+        \ if v:insertmode == 'i' |
+        \   silent execute "!gnome-terminal-cursor ibeam" |
+        \ elseif v:insertmode == 'r' |
+        \   silent execute "!gnome-terminal-cursor underline" |
+        \ endif
+    au VimLeave * silent execute "!gnome-terminal-cursor block"
 endif
 "}
 
