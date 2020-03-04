@@ -1,7 +1,7 @@
 syntax on
 
 
-" Plugins "{
+" Plugin selection "{
 
 let vimrc=expand('~/.config/nvim/init.vim')
 let plugged_path=expand('~/.config/nvim/plugged/')
@@ -60,9 +60,13 @@ Plug 'vim-scripts/groovy.vim'
 Plug 'cespare/vim-toml'
 
 call plug#end()
-filetype plugin indent on
 
 "}
+
+
+" Vim basics "{
+
+filetype plugin indent on
 
 
 " Leader key "{
@@ -75,6 +79,8 @@ let localleader = ";"
 if has('mouse')
     set mouse=a
 endif
+"}
+
 "}
 
 
@@ -134,27 +140,28 @@ nnoremap <silent> <leader>= gg=G<C-O><C-O>
 
 " Settings "{
 
-set tags=./tags;                        " <description>
-set laststatus=2                        " <description>
-set noshowmode                          " <description>
-set whichwrap=b,s,<,>,[,]               " <description>
-set expandtab                           " <description>
-set shiftwidth=4                        " <description>
-set softtabstop=4                       " <description>
-set smartindent                         " <description>
-set hlsearch incsearch                  " <description>
-set ignorecase smartcase                " <description>
+set tags=./tags;                        " description
+set laststatus=2                        " description
+set noshowmode                          " description
+set whichwrap=b,s,<,>,[,]               " description
+set tabstop=4                           " description
+set shiftwidth=4                        " description
+set softtabstop=4                       " description
+set smartindent                         " description
+set expandtab                           " description
+set hlsearch incsearch                  " description
+set ignorecase smartcase                " description
 "set nowrap                             " Do I not want this???
-set secure                              " <description>
-set exrc                                " <description>
-set nu                                  " <description>
-set list listchars=tab:»·,trail:·       " <description>
-set completeopt=menu,menuone,longest    " <description>
-set pumheight=15                        " <description>
-set foldmethod=marker                   " <description>
-set foldmarker={,}                      " <description>
-set foldopen-=block                     " <description>
-set guicursor=
+set secure                              " description
+set exrc                                " description
+set nu                                  " description
+set list listchars=tab:»·,trail:·       " description
+set completeopt=menu,menuone,longest    " description
+set pumheight=15                        " description
+set foldmethod=marker                   " description
+set foldmarker={,}                      " description
+set foldopen-=block                     " description
+set guicursor=                          " description
 
 "}
 
@@ -166,7 +173,7 @@ set t_Co=256
 colorscheme default
 set background=dark
 
-" Highlight 120 col's onward
+" Highlight 120 col mark IF violated
 au BufNewFile,BufRead * highlight ColorColumn ctermbg=90
 au BufNewFile,BufRead * call matchadd('ColorColumn', '\%121v', 100)
 
@@ -182,8 +189,8 @@ augroup END "}
 
 augroup HTMlAbbrevs "{
     autocmd!
-    autocmd BufNewFile,BufRead *.html iabbrev << &lt;
-    autocmd BufNewFile,BufRead *.html iabbrev >> &gt;
+    au BufNewFile,BufRead *.html iabbrev << &lt;
+    au BufNewFile,BufRead *.html iabbrev >> &gt;
 augroup END "}
 
 "augroup ICMC ASM Syntax "{
@@ -210,7 +217,7 @@ augroup PlantUML "{
 augroup END "}
 
 augroup CommitSpelling "{
-    autocmd FileType gitcommit setlocal spell
+    au FileType gitcommit setlocal spell spelllang=en
 augroup END "}
 
 "}
