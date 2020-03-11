@@ -182,8 +182,14 @@ set guicursor=                          " description
 
 " Termcolors
 set t_Co=256
-colorscheme default
-set background=dark
+set bg=dark
+colorscheme elflord
+if has("gui_running")
+    set guioptions -=T
+    set guioptions -=l
+    set guioptions -=r
+    set guifont=Hack\ 14
+endif
 
 " Highlight 120 col mark IF violated
 au BufNewFile,BufRead * highlight ColorColumn ctermbg=90
@@ -195,12 +201,12 @@ au BufNewFile,BufRead * call matchadd('ColorColumn', '\%121v', 100)
 " AuGroups "{
 
 augroup DevHelp "{
-    autocmd!
+    au!
     au FileType c nnoremap <silent> <buffer> <leader>k :! devhelp -s "<cword>" 2>/dev/null 1>&2 &<CR><CR>
 augroup END "}
 
 augroup HTMlAbbrevs "{
-    autocmd!
+    au!
     au BufNewFile,BufRead *.html iabbrev << &lt;
     au BufNewFile,BufRead *.html iabbrev >> &gt;
 augroup END "}
@@ -212,7 +218,7 @@ augroup END "}
 "augroup END "}
 
 augroup Comments "{
-    autocmd!
+    au!
     au BufNewFile,BufRead *.c nnoremap <silent> <buffer> <leader>q I//<esc>:s/\v(\/\/+)\1+//e<CR>
     au BufNewFile,BufRead *.java nnoremap <silent> <buffer> <leader>q I//<esc>:s/\v(\/\/+)\1+//e<CR>
     au BufNewFile,BufRead *.js nnoremap <silent> <buffer> <leader>q I//<esc>:s/\v(\/\/+)\1+//e<CR>
@@ -222,13 +228,20 @@ augroup Comments "{
 augroup END "}
 
 augroup PlantUML "{
-    autocmd!
+    au!
     au BufNewFile,BufRead *.uml setlocal syntax=plantuml
     au BufNewFile,BufRead *.puml setlocal syntax=plantuml
     au BufNewFile,BufRead *.puml nnoremap <silent> <leader>w :!plantuml -tsvg %<CR><CR>
 augroup END "}
 
+augroup JellyXML "{
+    au!
+    au BufNewFile,BufRead *.jelly setlocal syntax=xml
+augroup END "}
+
+
 augroup CommitSpelling "{
+    au!
     au FileType gitcommit setlocal spell spelllang=en
 augroup END "}
 
