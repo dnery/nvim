@@ -6,10 +6,9 @@
 ----------------------------------------------------------------------------------------------------
 return {
     "savq/melange-nvim",
-    lazy = false,
+    -- lazy = false,
     -- Uncomment this to prioritize the load-in for this
     -- priority = 1000,
-    config = function()
-    end
+    config = function() end
 }
 

@@ -10,14 +10,14 @@ return {
     config = function()
         -- Remove bg color from the tree style explorer
         vim.cmd([[hi NvimTreeNormal guibg=NONE ctermbg=NONE]])
-        require("nvim-tree").setup({
+        require "nvim-tree".setup {
             filters = {
                 dotfiles = false,           -- Show hidden files
             },
             view = {
                 adaptive_size = true,       -- Better sizing on tighter spaces
             },
-        })
+        } -- setup ends
     end,
 }
 
