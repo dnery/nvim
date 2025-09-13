@@ -87,7 +87,7 @@ vim.opt.swapfile = false                                    -- Don't create swap
 vim.opt.undofile = true                                     -- Persistent undo
 vim.opt.undodir = vim.fn.expand(udl)                        -- Undo directory
 if vim.fn.isdirectory(udl) == 0 then
-  vim.fn.mkdir(udl, "p")
+    vim.fn.mkdir(udl, "p")
 end
 vim.opt.updatetime = 300                                    -- Faster completion
 vim.opt.timeoutlen = 500                                    -- Key timeout duration
@@ -123,12 +123,12 @@ vim.opt.guicursor = gcconf
 vim.opt.foldmethod = "expr"                                 -- Use expression for folding
 -- vim.wo.vim.foldexpr = "v:lua.vim.treesitter.foldexpr()"    -- Use treesitter for folding
 vim.opt.foldlevel = 99                                      -- Start with all folds open
- 
+
 -- Split behavior
 vim.opt.splitbelow = true                                   -- Horizontal splits go below
 vim.opt.splitright = true                                   -- Vertical splits go right
 
--- Shell & terminal emulator
-vim.opt.shell = "pwsh.exe"
-vim.opt.shellcmdflag = "-NoLogo -NoProfile -Command"
-vim.opt.shellquote = "\""
+-- Shell & terminal emulator (mostly ignored, honestly)
+-- vim.opt.shell = "pwsh.exe"
+-- vim.opt.shellcmdflag = "-NoLogo -NoProfile -Command"
+-- vim.opt.shellquote = "\""

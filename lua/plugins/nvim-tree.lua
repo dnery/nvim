@@ -19,9 +19,9 @@ return {
             },
         } -- setup ends
     end,
+    keys = {
+        { "<leader>e", "<cmd>NvimTreeToggle<cr>",  desc = "Toggle file explorer" },
+        { "<leader>m", "<cmd>NvimTreeFocus<cr>",  desc = "Focus file explorer" },
+    }
 }
-
-
-
-
 
