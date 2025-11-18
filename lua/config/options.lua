@@ -2,6 +2,8 @@
 -- TITLE : options.lua
 -- ABOUT : Basic neovim options, including visuals, search, file handling & performance tweaks
 ----------------------------------------------------------------------------------------------------
+local utils = require "utils"
+
 
 -- vim.cmd.colorscheme("wildcharm")
 vim.cmd.colorscheme("elflord")
@@ -22,7 +24,12 @@ end
 local scc = {0, "ColorColumn", { bg = "#292929" }}
 
 -- "Undo dir location"
-local udl = os.getenv("TEMP") .. "\\undodir"
+if utils.get_os_name() == "windows" then
+	local udl = os.getenv("TEMP") .. "\\undodir"
+else
+	local udl = os.getenv("TMPDIR") .. "\\undodir"
+end
+
 
 -- "GUI cusor config"
 local gcconf = {

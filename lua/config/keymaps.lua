@@ -2,6 +2,7 @@
 -- TITLE : keymaps.lua
 -- ABOUT : Leader, personal keymaps & overrides for all modes
 ----------------------------------------------------------------------------------------------------
+local utils = require "utils"
 
 -- Leader
 vim.g.mapleader = " "                              -- Set leader key to space
@@ -38,7 +39,12 @@ vim.keymap.set("n", "<s-l>", "100|", { desc = "Move to column 100 (or last char)
 vim.keymap.set("v", "<s-l>", "100|", { desc = "Move to column 100 (or last char)" })
 
 -- Edit shortcuts
-local conf_file = vim.fn.expand(os.getenv("LOCALAPPDATA") .. "\\nvim\\init.lua")
+local conf_file = nil
+if utils.get_os_name() == "windows" then
+    conf_file = vim.fn.expand(os.getenv("LOCALAPPDATA") .. "\\nvim\\init.lua")
+else
+    conf_file = vim.fn.expand(os.getenv("XDG_CONFIG_HOME") .. "/nvim/init.lua")
+end
 vim.keymap.set("n", "<leader>ce", ":e " .. conf_file .. "<cr>", { desc = "Edit config file" })
 vim.keymap.set("n", "<leader>cs", ":so " .. conf_file .. "<cr>", { desc = "Source config file" })
 
