@@ -24,10 +24,11 @@ end
 local scc = {0, "ColorColumn", { bg = "#292929" }}
 
 -- "Undo dir location"
+local udl = nil
 if utils.get_os_name() == "windows" then
-	local udl = os.getenv("TEMP") .. "\\undodir"
+	udl = vim.fn.expand(os.getenv("TEMP") .. "\\undodir")
 else
-	local udl = os.getenv("TMPDIR") .. "\\undodir"
+	udl = vim.fn.expand(os.getenv("TMPDIR") .. "undodir")
 end
 
 
@@ -92,7 +93,7 @@ vim.opt.backup = false                                      -- Don't create back
 vim.opt.writebackup = false                                 -- Don't create backup before writing
 vim.opt.swapfile = false                                    -- Don't create swap files
 vim.opt.undofile = true                                     -- Persistent undo
-vim.opt.undodir = vim.fn.expand(udl)                        -- Undo directory
+vim.opt.undodir = udl                                       -- Undo directory
 if vim.fn.isdirectory(udl) == 0 then
     vim.fn.mkdir(udl, "p")
 end
