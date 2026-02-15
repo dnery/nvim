@@ -1,0 +1,8 @@
+require "config.core.options"
+print "Loaded options"
+require "config.core.keymaps"
+print "Loaded keymaps"
+require "config.core.autocmds"
+print "Loaded autocmds"
+require "config.lazy"
+print "Loaded lazyload"
