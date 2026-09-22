@@ -56,7 +56,9 @@ vim.keymap.set("n", "<C-Down>", ":resize -2<cr>", { desc = "Decrease window heig
 vim.keymap.set("n", "<C-Left>", ":vertical resize -2<cr>", { desc = "Decrease window width" })
 vim.keymap.set("n", "<C-Right>", ":vertical resize +2<cr>", { desc = "Increase window width" })
 
--- Move lines up/down vscode style (conflicts with current nav setup)
+-- Notes
+-- -> For moving linves up and down vscode style, use mini-move
+-- -> For surround selection and changing (e.g. `ciq`) use mini-surround
 -- vim.keymap.set("n", "<A-j>", ":m .+1<cr>==", { desc = "Move line down" })
 -- vim.keymap.set("n", "<A-k>", ":m .-2<cr>==", { desc = "Move line up" })
 -- vim.keymap.set("v", "<A-j>", ":m '>+1<cr>gv=gv", { desc = "Move selection down" })
